@@ -1,0 +1,19 @@
+body {
+    background-color: rgb(167, 238, 238);
+}
+
+.checkboxes {
+    padding-top: 15%;
+    text-align: center;
+}
+
+.checkboxes input {
+    margin: 0 5px 0 0;
+}
+
+.generatebutton {
+    width: 8%; 
+    height: 20px;
+    margin-left: 46%;
+    margin-top: 10%;
+}
