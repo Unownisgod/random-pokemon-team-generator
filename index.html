@@ -9,67 +9,20 @@
 
 <body>
     <form class="checkboxes">
+        <div class="row justify-content-center tittle">
+            <div class="col-6">
+                <h1>Random pokemon generator Gen V</h1>
+                <h5>By Unownisgod</h3>
+            </div>
+        </div>
         <!--Checkboxes-->
         <div class="row justify-content-center">
-            <div class="col-2">
-                <input type="checkbox" id="randomizeiv" name="randomizeIV" value="Randomize EV"
-                    class="checkbox" /><label>Randomize IV</label>
-            </div>
-            <div class="col-2">
-                <input type="checkbox" id="randomizeev" name="randomizeEV" value="Randomize IV"
-                    class="checkbox" /><label>Randomize EV</label>
-            </div>
             <div class="col-2">
                 <input type="checkbox" id="finalevos" name="finalEvos" value="Final evolutions only"
                     class="checkbox" /><label>Final evolutions only</label>
             </div>
         </div>
         <div class="row justify-content-center">
-            <!--Select IVs-->
-            <div class="col-2" style="text-align: justify;">
-                <input type="number" id="hpiv" name="hpiv" value="Randomize EV" class="iv" min="0"
-                    max="31" /><label>HP</label>
-                <br>
-                <input type="number" id="attiv" name="attiv" value="Randomize EV" class="iv" min="0"
-                    max="31" /><label>Attack</label>
-                <br>
-                <input type="number" id="defiv" name="defiv" value="Randomize EV" class="iv" min="0"
-                    max="31" /><label>Deffense</label>
-                <br>
-                <input type="number" id="spattiv" name="spattiv" value="Randomize EV" class="iv" min="0"
-                    max="31" /><label>Special Attack</label>
-                <br>
-                <input type="number" id="spdefiv" name="spdefiv" value="Randomize EV" class="iv" min="0"
-                    max="31" /><label>Special Deffense</label>
-                <br>
-                <input type="number" id="speiv" name="speiv" value="Randomize EV" class="iv" min="0"
-                    max="31" /><label>Speed</label>
-                <br>
-            </div>
-            <!--Select EVs-->
-            <div class="col-2" style="text-align: justify;">
-                <input type="number" id="hpev" name="hpev" value="Randomize EV" class="ev" min="0"
-                    max="255" /><label>HP</label>
-                <br>
-                <input type="number" id="attev" name="attev" value="Randomize EV" class="ev" min="0"
-                    max="255" /><label>Attack</label>
-                <br>
-                <input type="number" id="defev" name="defev" value="Randomize EV" class="ev" min="0"
-                    max="255" /><label>Deffense</label>
-                <br>
-                <input type="number" id="spattev" name="spattev" value="Randomize EV" class="ev" min="0"
-                    max="255" /><label>Special Attack</label>
-                <br>
-                <input type="number" id="spdefev" name="spdefev" value="Randomize EV" class="ev" min="0"
-                    max="255" /><label>Special Deffense</label>
-                <br>
-                <input type="number" id="speev" name="speev" value="Randomize EV" class="ev" min="0"
-                    max="255" /><label>Speed</label>
-                <br>
-            </div>
-            <div class="col-2">
-
-            </div>
         </div>
         <div class="row justify-content-center generatebutton">
             <button name="generate" type="submit" value="Generate">Generate</button>
