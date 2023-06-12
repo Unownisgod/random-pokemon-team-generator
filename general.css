@@ -1,24 +1,33 @@
 body {
-    background-color: rgb(167, 238, 238);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    background: url("images/bg.png") no-repeat fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.container{
+.container {
     margin: 50px;
     padding-bottom: 50px;
-    background: rgba(240, 248, 255, 0.5);
+    background: rgba(200, 200, 200, 0.8);
 }
+.index{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .tittle {
     text-align: center;
     margin-top: 5%;
     padding-bottom: 8%;
 }
 
-.checkboxes {
-    padding-top: 10%;
+.pokename {
     text-align: center;
+    margin-top: 5%;
+    padding-bottom: 8%;
 }
 
 .checkboxes input {
@@ -42,6 +51,7 @@ img {
     height: 100%;
     object-fit: cover;
 }
-.pokecontainer{
+
+.pokecontainer {
     margin-top: 5%;
 }
