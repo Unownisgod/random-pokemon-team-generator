@@ -620,3 +620,4 @@ Terrakion
 Virizion
 Tornadus
 Thundurus
+Landorus
