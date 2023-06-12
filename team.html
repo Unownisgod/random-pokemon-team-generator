@@ -5,20 +5,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="general.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js" charset="utf-8"></script>
 </head>
 
 <body>
+    <div id="pokebase" class="justify-content-center">
     <script>
         class pokemon {
-            constructor(number, imagesrc, name, iv, ev) {
-                this.number = number;
-                this.imagesrc = imagesrc;
-                this.name = name;
-                this.iv = iv;
-                this.ev = ev;
+            constructor() {
+                var iv = [0, 0, 0, 0, 0, 0];
+                var ev = [0, 0, 0, 0, 0, 0];
                 this.generatenumber();
                 this.searchpokemon();
-                this.searchpokemonimage();            }
+                this.searchpokemonimage();
+                this.generateiv();
+                this.generateev();
+                this.fixiv();
+                this.fixev();
+            }
             fixiv() {
                 for (let i = 0; i < 6; i++) {
                     if (this.iv[i] > 31) {
@@ -29,7 +33,7 @@
                     }
                 }
             }
-            fixev = function () {
+            fixev() {
                 var totalev = 0;
                 for (let i = 0; i < 6; i++) {
                     if (this.ev[i] > 255) {
@@ -57,24 +61,113 @@
             generatenumber() {
                 this.number = Math.floor(1 + Math.random() * 622)
             }
-            
+
             //busco el nombre del pokemon en la lista
             searchpokemon() {
                 fetch("pokemon.txt")
                     .then(response => response.text())
                     .then(list => {
                         var pokelist = list.split("\n")
-                        this.name = pokelist[this.number-1]
+                        this.name = pokelist[this.number - 1]
                         console.log(name);
                     });
             }
             // genero el src de la imágen.
             searchpokemonimage() {
-                this.imagesrc = "image\\" + (this.number - 1) + ".jpg";
+                this.imagesrc = "images/" + this.number + ".png";
+            }
+            generateiv() {
+                this.iv = [0, 0, 0, 0, 0, 0];
+                for (let i = 0; i < 6; i++) {
+                    var rng = Math.floor(1 + Math.random() * 31);
+                    this.iv[i] = rng;
+                }
+            }
+            generateev() {
+                this.ev = [0, 0, 0, 0, 0, 0];
+                for (let i = 0; i < 510; i++) {
+                    var rng = Math.floor(Math.random() * 6);
+                    this.ev[rng]++;
+                }
+                this.fixev();
             }
         }
+        //generar equipo
+        var poketeam = [];
+        async function createTeam() {
+            for (let i = 0; i < 6; i++) {
+                poketeam[i] = new pokemon();
+            }
+        }
+        createTeam()
+        for (let i = 0; i < 6; i++) {
+            var row = document.createElement("div");
+            row.classList.add("row");
+            row.id = "row"+i;
+            document.getElementById("pokebase").appendChild(row);
+
+            var pokecontainer = document.createElement("div");            
+            pokecontainer.classList.add("pokecontainer");
+            pokecontainer.classList.add("justify-content-center");
+            pokecontainer.classList.add("col-6");
+            pokecontainer.id = "pokecontainer" + i;
+            document.getElementById("row"+i).appendChild(pokecontainer);
+
+            var pokename = document.createElement("h1");
+            pokename.classList.add("pokename");
+            pokename.id = "pokename" + i;
+            pokename.innerHTML = poketeam[i].name;
+            document.getElementById("pokecontainer" + i).appendChild(pokename);
+
+            var subrow = document.createElement("div");
+            subrow.classList.add("row");
+            subrow.id = "subrow"+i;
+            document.getElementById("row"+i).appendChild(subrow);
+
+            var imgcontainer = document.createElement("div");            
+            imgcontainer.classList.add("imgcontainer");
+            imgcontainer.classList.add("justify-content-center");
+            imgcontainer.classList.add("col-4");
+            imgcontainer.id = "imgcontainer" + i;
+            document.getElementById("subrow"+i).appendChild(imgcontainer);
+
+            var pokeimage = document.createElement("img");
+            pokeimage.classList.add("pokeimg");
+            pokeimage.id = "pokeimg" + i;
+            pokeimage.src = poketeam[i].imagesrc;
+            document.getElementById("imgcontainer" + i).appendChild(pokeimage);
+
+            var ivevcontainer = document.createElement("div");            
+            ivevcontainer.classList.add("ivevcontainer");
+            ivevcontainer.classList.add("justify-content-center");
+            ivevcontainer.classList.add("col-4");
+            ivevcontainer.id = "ivevcontainer" + i;
+            document.getElementById("subrow"+i).appendChild(ivevcontainer);
+
+            var trace1 = {
+  x: ["HP", "ATK", "DEF", "SPA", "SPD", "SPE"],
+  y: [31, 25, 12, 21, 23, 9],
+  name: 'Trace1',
+  type: 'bar'
+};
+var trace2 = {
+  x: ["HP", "ATK", "DEF", "SPA", "SPD", "SPE"],
+  y: [-255, -8, -98, -62, -7, 0],
+  name: 'Trace2',
+  type: 'bar'
+};
+var data = [trace1, trace2];
+var layout = {
+  xaxis: {title: 'X axis'},
+  yaxis: {title: 'Y axis'},
+  barmode: 'relative',
+  title: 'Relative Barmode'
+};
+
+Plotly.newPlot('ivevcontainer' + i, data, layout);
+        }
     </script>
-    <!--diseño de la página aquí-->
+    </div>
 </body>
 
 </html>

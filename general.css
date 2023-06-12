@@ -1,10 +1,12 @@
 body {
     background-color: rgb(167, 238, 238);
 }
-.tittle{
+
+.tittle {
     margin-top: 5%;
     padding-bottom: 8%;
 }
+
 .checkboxes {
     padding-top: 10%;
     text-align: center;
@@ -15,8 +17,16 @@ body {
 }
 
 .generatebutton {
-    width: 8%; 
+    width: 8%;
     height: 20px;
     margin-left: 46%;
     margin-top: 5%;
+}
+
+.imgcontainer {
+    height: 300px;
+}
+
+.pokeimg {
+    object-fit: fill
 }
