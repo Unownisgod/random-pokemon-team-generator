@@ -82,7 +82,7 @@
                     generateiv() {
                         this.iv = [0, 0, 0, 0, 0, 0];
                         for (let i = 0; i < 6; i++) {
-                            var rng = Math.floor(1 + Math.random() * 31);
+                            var rng = Math.floor(Math.random() * 31);
                             this.iv[i] = rng;
                         }
                     }
