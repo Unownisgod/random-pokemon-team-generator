@@ -11,7 +11,7 @@
 
 <body>
     <div class="row container justify-content-center">
-        <div id="pokebase" class="col-9">
+        <div id="pokebase" class="col-xl-9">
             <script>
                 class pokemon {
                     constructor() {
@@ -69,7 +69,7 @@
                         await fetch("pokemon.txt")
                             .then(response => response.text())
                             .then(list => {
-                                pokelist = list.split("\n");
+                                let pokelist = list.split("\n");
                                 this.name = pokelist[this.number - 1];
                                 console.log(name);
                             });
@@ -124,7 +124,7 @@
                         var imgcontainer = document.createElement("div");
                         imgcontainer.classList.add("imgcontainer");
                         imgcontainer.classList.add("justify-content-center");
-                        imgcontainer.classList.add("col-4");
+                        imgcontainer.classList.add("col-xl-4");
                         imgcontainer.id = "imgcontainer" + i;
                         document.getElementById("subrow" + i).appendChild(imgcontainer);
 
@@ -137,14 +137,14 @@
                         var ivcontainer = document.createElement("div");
                         ivcontainer.classList.add("ivcontainer");
                         ivcontainer.classList.add("justify-content-center");
-                        ivcontainer.classList.add("col-4");
+                        ivcontainer.classList.add("col-xl-4");
                         ivcontainer.id = "ivcontainer" + i;
                         document.getElementById("subrow" + i).appendChild(ivcontainer);
 
                         var evcontainer = document.createElement("div");
                         evcontainer.classList.add("evcontainer");
                         evcontainer.classList.add("justify-content-center");
-                        evcontainer.classList.add("col-4");
+                        evcontainer.classList.add("col-xl-4");
                         evcontainer.id = "evcontainer" + i;
                         document.getElementById("subrow" + i).appendChild(evcontainer);
 
