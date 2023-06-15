@@ -17,15 +17,18 @@
                     constructor() {
                         var iv = [0, 0, 0, 0, 0, 0];
                         var ev = [0, 0, 0, 0, 0, 0];
-                        this.generatenumber();
-                        this.searchpokemon();
-                        this.searchpokemonimage();
-                        this.generateiv();
-                        this.generateev();
-                        this.fixiv();
-                        this.fixev();
+                        this.generateNumber();
+                        this.searchPokemon();
+                        this.searchPokemonImage();
+                        this.generateIv();
+                        this.generateEv();
+                        this.fixIv();
+                        this.fixEv();
+                        this.generateItem();
+                        this.generateNature();
+                        //falta objeto
                     }
-                    fixiv() {
+                    fixIv() {
                         for (let i = 0; i < 6; i++) {
                             if (this.iv[i] > 31) {
                                 this.iv[i] = 31
@@ -35,7 +38,7 @@
                             }
                         }
                     }
-                    fixev() {
+                    fixEv() {
                         var totalev = 0;
                         for (let i = 0; i < 6; i++) {
                             if (this.ev[i] > 255) {
@@ -60,26 +63,26 @@
 
 
                     //genero el número de pokemon entre el 1 y el 622
-                    generatenumber() {
+                    generateNumber() {
                         this.number = Math.floor(1 + Math.random() * 622)
                     }
 
                     //busco el nombre del pokemon en la lista
-                    async searchpokemon() {
+                    async searchPokemon() {
                         await fetch("pokemon.txt")
                             .then(response => response.text())
                             .then(list => {
-                                let pokelist = list.split("\n");
-                                this.name = pokelist[this.number - 1];
+                                let pokeList = list.split("\n");
+                                this.name = pokeList[this.number - 1];
                                 console.log(name);
                             });
                     }
                     // genero el src de la imágen.
-                    searchpokemonimage() {
+                    searchPokemonImage() {
                         this.imagesrc = "images/" + this.number + ".png";
                     }
                     //genera los IV
-                    generateiv() {
+                    generateIv() {
                         this.iv = [0, 0, 0, 0, 0, 0];
                         for (let i = 0; i < 6; i++) {
                             var rng = Math.floor(Math.random() * 31);
@@ -87,20 +90,48 @@
                         }
                     }
                     //genera los EV
-                    generateev() {
+                    generateEv() {
                         this.ev = [0, 0, 0, 0, 0, 0];
-                        for (let i = 0; i < 510; i++) {
-                            var rng = Math.floor(Math.random() * 6);
-                            this.ev[rng]++;
+                        let total = 0;
+                        for (let i = 0; total < 510; i++) {
+                            var stat = Math.floor(Math.random() * 6);
+                            var add = Math.floor(Math.random() * 64);
+
+                            this.ev[stat] += add;
+                            total += add;
                         }
-                        this.fixev();
+                        this.fixEv();
                     }
+                    async generateItem() {
+                        let item = Math.floor(1 + (Math.random() * 156));
+                        try {
+                            const response = await fetch("items.txt");
+                            if (!response.ok) {
+                                throw new Error("Failed to fetch items.txt");
+                            }
+                            const list = await response.text();
+                            let itemList = list.split("\n");
+                            this.item = itemList[item - 1];
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    };
+
+                    generateNature() {
+                        const natureList = ["Adamant", "Bashful", "Bold", "Brave", "Calm", "Careful", "Docile", "Gentle",
+                            "Hardy", "Hasty", "Impish", "Jolly", "Lax", "Lonely", "Mild", "Modest", "Naive", "Naughty", "Quiet",
+                            "Quirky", "Rash", "Relaxed", "Sassy", "Serious", "Timid"];
+                        var natureIndex = Math.floor(1 + Math.random() * natureList.length);
+                        this.nature = natureList[natureIndex];
+                    }
+
                 }
+
                 //generar equipo
-                var poketeam = [];
+                var pokeTeam = [];
                 async function createTeam() {
                     for (let i = 0; i < 6; i++) {
-                        poketeam[i] = new pokemon();
+                        pokeTeam[i] = new pokemon();
                     }
                 }
                 function visualizeContent() {
@@ -113,7 +144,7 @@
                         var pokename = document.createElement("h1");
                         pokename.classList.add("pokename");
                         pokename.id = "pokename" + i;
-                        pokename.innerHTML = "#"+poketeam[i].number+ " " + poketeam[i].name;
+                        pokename.innerHTML = "#" + pokeTeam[i].number + " " + pokeTeam[i].name;
                         document.getElementById("row" + i).appendChild(pokename);
 
                         var subrow = document.createElement("div");
@@ -131,7 +162,7 @@
                         var pokeimage = document.createElement("img");
                         pokeimage.classList.add("pokeimg");
                         pokeimage.id = "pokeimg" + i;
-                        pokeimage.src = poketeam[i].imagesrc;
+                        pokeimage.src = pokeTeam[i].imagesrc;
                         document.getElementById("imgcontainer" + i).appendChild(pokeimage);
 
                         var ivcontainer = document.createElement("div");
@@ -148,9 +179,26 @@
                         evcontainer.id = "evcontainer" + i;
                         document.getElementById("subrow" + i).appendChild(evcontainer);
 
+                        var subsubrow = document.createElement("div");
+                        subsubrow.classList.add("row");
+                        subsubrow.id = "subrow-2-" + i;
+                        document.getElementById("row" + i).appendChild(subsubrow);
+
+                        var item = document.createElement("h5");
+                        item.innerHTML = "Item: <b>" + pokeTeam[i].item + "</b>";
+                        item.classList.add("item");
+                        item.id = "item" + i;
+                        document.getElementById("subrow-2-" + i).appendChild(item);
+
+                        var nature = document.createElement("h5");
+                        nature.innerHTML = "Nature: <b>" + pokeTeam[i].nature + "</b>";
+                        nature.classList.add("nature");
+                        nature.id = "nature" + i;
+                        document.getElementById("subrow-2-" + i).appendChild(nature);
+
                         var iv = {
                             x: ["HP", "ATK", "DEF", "SPA", "SPD", "SPE"],
-                            y: poketeam[i].iv,
+                            y: pokeTeam[i].iv,
                             name: 'IV',
                             type: 'bar'
                         };
@@ -167,7 +215,7 @@
                         Plotly.newPlot('ivcontainer' + i, iv, layout);
                         var ev = {
                             x: ["HP", "ATK", "DEF", "SPA", "SPD", "SPE"],
-                            y: poketeam[i].ev,
+                            y: pokeTeam[i].ev,
                             name: 'Trace2',
                             type: 'bar'
                         };
@@ -186,7 +234,7 @@
                     }
                 }
                 createTeam();
-                setTimeout(function(){
+                setTimeout(function () {
                     visualizeContent();
                 }, 50)           
             </script>
