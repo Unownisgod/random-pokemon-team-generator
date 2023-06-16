@@ -111,20 +111,23 @@
                         }
                         this.fixEv();
                     }
+
+                    //genera un objeto aleatorio que no se puede repetir
                     async generateItem() {
                         let item = Math.floor(1 + (Math.random() * 156));
                         const response = await fetch("items.txt");
                         const list = await response.text();
                         let itemList = list.split("\n");
                         this.item = itemList[item - 1];
-                        if(!usedItems.includes(item)){
+                        if (!usedItems.includes(item)) {
                             usedItems.push(item);
                         }
-                        else{
+                        else {
                             this.generateItem();
                         }
                     };
 
+                    //genera una naturaleza aleatoria
                     generateNature() {
                         const natureList = ["Adamant", "Bashful", "Bold", "Brave", "Calm", "Careful", "Docile", "Gentle",
                             "Hardy", "Hasty", "Impish", "Jolly", "Lax", "Lonely", "Mild", "Modest", "Naive", "Naughty", "Quiet",
